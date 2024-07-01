@@ -1,6 +1,8 @@
 import classNames from "classnames";
-import React from "react";
+import React, { useState } from "react";
 import Icon from "../icon/Icon";
+
+import styles from './Input.module.scss'
 
 const Input = ({
   id,
@@ -20,7 +22,7 @@ const Input = ({
   ...restProps
 }) => {
 
-  const [inputValue, setinputValue] = useState(valye ? value : '');
+  const [inputValue, setinputValue] = useState(value ? value : '');
 
   const [isPasswordVisible, setisPasswordVisible] = useState(false);
 
@@ -42,13 +44,16 @@ const Input = ({
     onChange(e);
   }
 
+  const iconType = isPasswordVisible ? 'show' : 'hide';
+  const iconLabel = `비밀번호 ${isPasswordVisible ? '표시' : '감춤'}`
+
   return (
       <div className={classNames(styles.formControl, className)}>
         <label>
             {label}
         </label>
 
-        <div className={classNames(styles.inputWrapper, errorProp && styles.inputWrapperError )}></div>
+        <div className={classNames(styles.inputWrapper, errorProp && styles.inputWrapperError )}>
         {icon ? <Icon /> : null}
         <input
           id={id}
@@ -69,12 +74,20 @@ const Input = ({
             className={styles.button}
             onClick={() => setisPasswordVisible(prev => !prev)}
           >
-
+          <Icon type={iconType} alt= {iconLabel} title={iconLabel} />
           </button>
         ) : null}
       </div>
 
-  )
+      {errorProp && (
+        <span role="alert" className={style.error}>
+          {errorProp}
+        </span>
+      )}
+
+      </div>
+
+  );
 };
 
 export default Input;

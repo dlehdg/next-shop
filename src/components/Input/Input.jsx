@@ -33,7 +33,7 @@ const Input = ({
     }
 
     if(password) {
-      return 'password'
+      return isPasswordVisible ? 'text' : 'password';
     }
 
     return 'text';
@@ -49,12 +49,15 @@ const Input = ({
 
   return (
       <div className={classNames(styles.formControl, className)}>
-        <label>
+        <label
+        htmlFor={id}
+        className={classNames(styles.label, labelVisible || styles.labelHidden)}
+      >
             {label}
         </label>
 
         <div className={classNames(styles.inputWrapper, errorProp && styles.inputWrapperError )}>
-        {icon ? <Icon /> : null}
+        {icon ? <Icon type = {icon} /> : null}
         <input
           id={id}
           type={checkType()}

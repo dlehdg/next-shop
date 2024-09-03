@@ -8,81 +8,79 @@ import Input from "@/components/Input/Input";
 import Divider from "@/components/divider/Divider";
 import Button from "@/components/button/Button";
 import Link from "next/link";
+import { sendPasswordResetEmail } from "firebase/auth";
+import { toast } from "react-toastify";
+import { auth } from "@/firebase/firebase";
 
 const ResetClient = () => {
-  const [email, setemail] = useState("");
-  const [isLoading, setisLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const resetPassword = (e) => {
     e.preventDefault();
     setIsLoading(true);
+
+    sendPasswordResetEmail(auth, email)
+    .then(() => {
+      setIsLoading(false);
+
+      toast.success("비밀번호 업데이트를 위해 이메일을 체크해주세요");
+    })
+    .catch((error) => {
+      setIsLoading(false);
+
+      toast.message(error.message);
+    })
   };
 
   return (
     <>
-      {isLoading && <Loader />}
-      <section className={styles.page}>
-        <div className={styles.container}>
-          <div className={styles.form}>
-            <Heading
-              title="비밀번호 업데이트"
-              subtitle="이메일 주소를 입력해주세요."
-            />
+            {isLoading && <Loader />}
+            <section className={styles.page}>
+                <div className={styles.container}>
 
-            <form onSubmit={resetPassword}>
-              <Input
-                email
-                icon="letter"
-                id="email"
-                name="email"
-                label="이메일"
-                placeholder="아이디(이메일)"
-                className={styles.control}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
+                    <div className={styles.form}>
 
-              <Input
-                password
-                icon="lock"
-                id="password"
-                name="password"
-                label="비밀번호"
-                placeholder="비밀번호"
-                className={styles.control}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
+                        <Heading
+                            title="비밀번호 업데이트"
+                            subtitle="이메일 주소를 입력해주세요."
+                        />
 
-              <Input
-                password
-                icon="lock"
-                id="password"
-                name="password"
-                label="비밀번호 확인"
-                placeholder="비밀번호 확인"
-                className={styles.control}
-                value={cPassword}
-                onChange={(e) => setCPassword(e.target.value)}
-              />
+                        <form onSubmit={resetPassword}>
 
-              <div className={styles.buttonGroup}>
-                {/* Button */}
-                <Button type="submit" width="100%">
-                  회원가입
-                </Button>
+                            <Input
+                                id="reset"
+                                label="reset"
+                                type="text"
+                                placeholder='Email'
+                                required
+                                value={email}
+                                className={styles.control}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
 
-                <Divider />
+                            <div>
+                                <Button type="submit">
+                                    업데이트
+                                </Button>
+                            </div>
 
-                <Button width="100%" secondary>
-                  <Link href={"/login"}>로그인</Link>
-                </Button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </section>
-    </>
+                            <div className={styles.links}>
+                                <p>
+                                    <Link href="/login">-로그인</Link>
+                                </p>
+                                <p>
+                                    <Link href="/register">-회원가입</Link>
+                                </p>
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+            </section>
+        </>
   );
 };
 

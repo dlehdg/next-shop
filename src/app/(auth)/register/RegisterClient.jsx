@@ -25,7 +25,23 @@ const RegisterClient = () => {
 
   const registerUser = (e) => {
     e.preventDefault();
-    setIsLoading(true);
+    if(password !== cPassword) {
+      toast.error("비밀번호가 일치하지 않습니다");
+    }
+    setIsLoading(true);;
+
+    createUserWithEmailAndPassword(auth, email, password)
+    .then((useCredential) => {
+      const user = useCredential;
+      console.log('user', user);
+
+      setIsLoading(flase);
+
+    })
+    .catch((error) => {
+      setIsLoading(false);
+      toast.error(error.message);
+    })
   };
 
   return (
@@ -84,7 +100,10 @@ const RegisterClient = () => {
               <Divider />
 
               <Button width="100%" secondary>
-                <Link href={"/login"}>로그인</Link>
+                <Link href={"/login"}>
+                
+                  로그인
+                </Link>
               </Button>
 
               <Divider />

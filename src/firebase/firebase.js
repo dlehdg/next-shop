@@ -7,13 +7,25 @@ import { getStorage } from 'firebase/storage'
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
+
+
+
 const firebaseConfig = {
-  apiKey: "AIzaSyDVGqSdzGMgcoTo0ReS3jt6pp5V4fMSSFM",
-  authDomain: "react-next-shop-8a820.firebaseapp.com",
-  projectId: "react-next-shop-8a820",
-  storageBucket: "react-next-shop-8a820.appspot.com",
-  messagingSenderId: "813020000652",
-  appId: "1:813020000652:web:7e5b773b071a5b240466a9"
+  
+// API_KEY: process.env.NEXT_PUBLIC_API_KEY,
+// AUTH_DOMAIN: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
+// PROJECT_ID: process.env.NEXT_PUBLIC_PROJECT_ID,
+// STORAGE_BUCKET: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
+// MESSAGING_SENDER_ID: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
+// APP_ID: process.env.NEXT_PUBLIC_APP_ID
+
+  apiKey: process.env.NEXT_PUBLIC_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_APP_ID
+
 };
 
 // Initialize Firebase

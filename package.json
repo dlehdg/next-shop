@@ -13,6 +13,7 @@
     "@reduxjs/toolkit": "^2.2.5",
     "@tosspayments/payment-sdk": "^1.7.1",
     "classnames": "^2.5.1",
+    "docker": "^1.0.0",
     "firebase": "^10.12.2",
     "next": "14.2.4",
     "notiflix": "^3.2.7",

@@ -36,8 +36,29 @@ const counterReducer = createReducer(initialState, (builder) => {
 
 // 3. builder.addDefauiltCase(reducer) => 다른 case reducer나 matcher reducer가 실행되지 않았다면 기본 case reducer가 실행됩니다
 
-// 
-
 
 
 // 2. 맵 객체 -> map object
+
+// createReducer(initialState, actionMap, actionMatchers, defaultCaseReducer)
+
+const lengthReducer = createReducer(
+    // initial state
+    {strLen : 0, nonStringActions : 0},
+    
+    // aciotn map -> normal reducers
+    {
+        increment: (state, action) => state + action.payload,
+        decrement: (state, action) => state - action.payload
+    },
+
+    // array of matcher reducers
+    [
+        {
+            matcher: isStringPayloadAction,
+            reducer(state, action) {
+                state.strLen += action.payload.length
+            }
+        }
+    ]
+)

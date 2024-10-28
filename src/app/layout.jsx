@@ -11,16 +11,15 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-
-
   return (
     <html lang="ko">
       <body className={inter.className}>
-        <ToastProvider />
-          <Provider>
-            {children}
-          </Provider>
-        </body>
+        <provider>
+          <ToastProvider />
+
+          {children}
+        </provider>
+      </body>
     </html>
   );
 }

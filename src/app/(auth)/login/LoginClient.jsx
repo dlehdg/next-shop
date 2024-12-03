@@ -13,11 +13,14 @@ import Divider from "@/components/divider/Divider";
 import Button from "@/components/button/Button";
 import Link from "next/link";
 import { toast } from "react-toastify";
-import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
 import { auth } from "@/firebase/firebase";
 
 const LoginClient = () => {
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -31,27 +34,24 @@ const LoginClient = () => {
 
   const loginUser = (e) => {
     e.preventDefault();
-    toast.info('성공');
+    toast.info("성공");
     setIsLoading(true);
 
     signInWithEmailAndPassword(auth, email, password)
-    .then(() => {
-      setIsLoading(false);
-      toast.success('로그인에 성공 했습니다');
-      redirectUser();
-
-
-    })
-    .catch((error) => {
-      setIsLoading(false);
-      toast.error(error.message)
-    })
+      .then(() => {
+        setIsLoading(false);
+        toast.success("로그인에 성공 했습니다");
+        redirectUser();
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        toast.error(error.message);
+      });
   };
-  
 
   const signInWithGoogle = () => {
-      const provider = new GoogleAuthProvider();
-      signInWithPopup(auth, provider)
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
       .then((result) => {
         toast.success("로그인에 성공했습니다");
         redirectUser();
@@ -99,43 +99,30 @@ const LoginClient = () => {
             <div className={styles.group}>
               {/* 자동 로그인, 비밀번호 수정 */}
 
-              <AutoSignInCheckbox 
-                checked = {isAutoLogin}
-                onChange = {(e) => setIsAutoLogin(e.target.checked)}
+              <AutoSignInCheckbox
+                checked={isAutoLogin}
+                onChange={(e) => setIsAutoLogin(e.target.checked)}
               />
 
-              <Link href={'/reset'}>비밀번호 수정하기</Link>
+              <Link href={"/reset"}>비밀번호 수정하기</Link>
             </div>
             <div className={styles.buttonGroup}>
               {/* Button */}
-              <Button
-                type="submit"
-                width="100%"
-              >
+              <Button type="submit" width="100%">
                 로그인
               </Button>
 
               <Divider />
 
-              <Button
-                width="100%"
-                secondary
-              >
-                <Link href={"/register"}>
-                
-                  회원가입
-                </Link>
+              <Button width="100%" secondary>
+                <Link href={"/register"}>회원가입</Link>
               </Button>
 
               <Divider />
 
               <div>
                 {/* Button */}
-                <Button
-                  onClick = {signInWithGoogle}
-                >
-                  구글 로그인
-                </Button>
+                <Button onClick={signInWithGoogle}>구글 로그인</Button>
               </div>
             </div>
           </form>

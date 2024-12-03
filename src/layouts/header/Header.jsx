@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import styles from "./Header.module.scss";
 import { onAuthStateChanged, signOut } from "firebase/auth";
@@ -104,6 +104,7 @@ const Header = () => {
           )}
         </ul>
       </div>
+      <InnerHeader />
     </header>
   );
 };

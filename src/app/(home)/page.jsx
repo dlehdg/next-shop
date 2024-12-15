@@ -6,8 +6,8 @@ import Slider from "./../../components/slider/Slider";
 export default function Home() {
   return (
     <>
-      <Slider />
       <Header />
+      <Slider />
       <Link href="login">
         <h2>로그인 페이지로 이동</h2>
       </Link>

@@ -5,6 +5,10 @@ import Loader from "@/components/loader/Loader";
 import Heading from "@/components/heading/Heading";
 import Button from "@/components/button/Button";
 import { useRouter } from "next/navigation";
+import { db, storage } from "@/firebase/firebase";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { toast } from "react-toastify";
+import { Timestamp, addDoc, collection } from "firebase/firestore";
 
 const categories = [
   { id: 1, name: "Laptop" },
@@ -37,7 +41,7 @@ const AddProducutClient = () => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const handleInputChage = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
     setProduct({ ...product, [name]: value });
   };
@@ -53,6 +57,8 @@ const AddProducutClient = () => {
     uploadTask.on(
       "state_changed",
       (snapshot) => {
+        console.log(snapshot);
+
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setUploadProgress(progress);
@@ -63,7 +69,7 @@ const AddProducutClient = () => {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setProduct({ ...product, imageURL: downloadURL });
-          toast.success("이미지를 성골적으로 업로드했습니다.");
+          toast.success("이미지를 성공적으로 업로드했습니다.");
         });
       }
     );
@@ -92,7 +98,7 @@ const AddProducutClient = () => {
       router.push("/admin/all-products");
     } catch (error) {
       setIsLoading(false);
-      toast.error(getErrorMessage(error));
+      toast.error(error.message);
     }
   };
 
@@ -154,7 +160,7 @@ const AddProducutClient = () => {
             required
             name="price"
             value={product.place}
-            onChange={(e) => handleInputChage(e)}
+            onChange={(e) => handleInputChange(e)}
           />
 
           <label>상품 카테고리: </label>
@@ -162,7 +168,7 @@ const AddProducutClient = () => {
             required
             name="category"
             value={product.category}
-            onChange={(e) => handleInputChage(e)}
+            onChange={(e) => handleInputChange(e)}
           >
             <option value="" disabled>
               --상품 카테고리 선택

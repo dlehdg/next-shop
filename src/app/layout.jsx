@@ -4,6 +4,8 @@ import ToastProvider from "@/components/toastProvider/ToastProvider";
 import { Provider } from "react-redux";
 import store from "@/redux/store";
 import Providers from "./../redux/provider";
+import Header from "@/layouts/header/Header";
+import Footer from "@/layouts/footer/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,9 +19,12 @@ export default function RootLayout({ children }) {
     <html lang="ko">
       <body className={inter.className}>
         <Providers>
+          <Header />
           <ToastProvider />
 
           {children}
+
+          <Footer />
         </Providers>
       </body>
     </html>
